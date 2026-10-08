@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}Home - NIDS{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <h1>Welcome, {{ username }} 👋</h1>
+    <p>Network Intrusion Detection System security console</p>
+</div>
+
+<div
+    class="card p-4 mb-4"
+    style="
+        background:linear-gradient(135deg,#0f172a,#1e3a8a) !important;
+        color:white !important;
+    "
+>
+    <div class="row align-items-center g-4">
+
+        <div class="col-lg-8">
+
+            <div
+                class="info-pill mb-3"
+                style="
+                    background:rgba(255,255,255,.10);
+                    border-color:rgba(255,255,255,.18);
+                    color:#dbeafe;
+                "
+            >
+                🛡️ ML-Powered Security Monitoring
+            </div>
+
+            <h2 style="color:#fff !important;font-weight:800;">
+                Detect, analyze and understand network threats.
+            </h2>
+
+            <p style="color:#cbd5e1 !important;line-height:1.7;">
+                Analyze network traffic, inspect PCAP files, run live
+                captures, explore attack distributions and understand
+                model predictions.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2 mt-3">
+
+                <a
+                    href="{{ url_for('upload.upload') }}"
+                    class="btn btn-primary"
+                >
+                    📤 Analyze Traffic
+                </a>
+
+                <a
+                    href="{{ url_for('live_capture.live_capture') }}"
+                    class="btn btn-outline-light"
+                >
+                    📡 Start Live Capture
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 text-center">
+
+            <div style="font-size:85px;">
+                🛡️
+            </div>
+
+            <div style="color:#bfdbfe;font-weight:650;">
+                5-Class Intrusion Detection
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="section-header">
+
+    <div>
+        <h4>Detection Classes</h4>
+        <p class="text-secondary mb-0">
+            Traffic categories handled by the production NIDS.
+        </p>
+    </div>
+
+</div>
+
+<div class="row g-3 mb-4">
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-3 h-100">
+            <span class="class-badge class-benign">● Benign</span>
+            <h5 class="mt-3">Normal Traffic</h5>
+            <p class="text-secondary mb-0">
+                Baseline network activity without a detected attack.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-3 h-100">
+            <span class="class-badge class-dos">● DoS</span>
+            <h5 class="mt-3">Denial of Service</h5>
+            <p class="text-secondary mb-0">
+                High-volume traffic directed toward a service or host.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-3 h-100">
+            <span class="class-badge class-ddos">● DDoS</span>
+            <h5 class="mt-3">Distributed DoS</h5>
+            <p class="text-secondary mb-0">
+                High-volume traffic involving multiple sources.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-3 h-100">
+            <span class="class-badge class-portscan">● Port Scan</span>
+            <h5 class="mt-3">Network Reconnaissance</h5>
+            <p class="text-secondary mb-0">
+                Connections to multiple destination ports.
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card p-3 h-100">
+            <span class="class-badge class-bruteforce">● Brute Force</span>
+            <h5 class="mt-3">Authentication Attack</h5>
+            <p class="text-secondary mb-0">
+                Repeated authentication-service attempts.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="section-header">
+
+    <div>
+        <h4>Quick Actions</h4>
+        <p class="text-secondary mb-0">
+            Choose a workflow.
+        </p>
+    </div>
+
+</div>
+
+<div class="row g-3">
+
+    <div class="col-md-4">
+        <a
+            href="{{ url_for('upload.upload') }}"
+            class="text-decoration-none"
+        >
+            <div class="card p-4 h-100">
+                <div class="fs-2 mb-2">📤</div>
+                <h5>Upload Traffic</h5>
+                <p class="text-secondary mb-0">
+                    Analyze CSV, PCAP or PCAPNG files.
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a
+            href="{{ url_for('dashboard.dashboard') }}"
+            class="text-decoration-none"
+        >
+            <div class="card p-4 h-100">
+                <div class="fs-2 mb-2">📊</div>
+                <h5>Open Dashboard</h5>
+                <p class="text-secondary mb-0">
+                    Review results and research figures.
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a
+            href="{{ url_for('shap_explain.shap_explanation') }}"
+            class="text-decoration-none"
+        >
+            <div class="card p-4 h-100">
+                <div class="fs-2 mb-2">🧠</div>
+                <h5>Explain Predictions</h5>
+                <p class="text-secondary mb-0">
+                    Explore SHAP model explanations.
+                </p>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

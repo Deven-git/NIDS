@@ -1,0 +1,27 @@
+{
+  "total_rows": 2516553,
+  "train_rows_before_smote": 2013242,
+  "train_rows_after_smote": 537282,
+  "test_rows": 503311,
+  "class_distribution_before_smote": {
+    "Benign": 1675960,
+    "DoS": 154996,
+    "DDoS": 102411,
+    "Port Scan": 72555,
+    "Brute Force": 7320
+  },
+  "class_distribution_after_smote": {
+    "Benign": 200000,
+    "DoS": 154996,
+    "DDoS": 102411,
+    "Port Scan": 72555,
+    "Brute Force": 7320
+  },
+  "class_distribution_test_set": {
+    "Benign": 418990,
+    "DoS": 38749,
+    "DDoS": 25603,
+    "Port Scan": 18139,
+    "Brute Force": 1830
+  }
+}

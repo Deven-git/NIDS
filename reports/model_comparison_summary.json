@@ -1,0 +1,93 @@
+[
+  {
+    "accuracy": 0.9989469731438415,
+    "precision_macro": 0.9958641540662303,
+    "recall_macro": 0.9991612557731507,
+    "f1_macro": 0.99750674047923,
+    "roc_auc_macro": 0.9995454934618901,
+    "predict_time_seconds": 0.16524386405944824,
+    "training_time_seconds": 8.260359764099121,
+    "model_name": "Decision Tree"
+  },
+  {
+    "accuracy": 0.9367985201992406,
+    "precision_macro": 0.7523054262174691,
+    "recall_macro": 0.9327326753101326,
+    "f1_macro": 0.8274278620743404,
+    "roc_auc_macro": 0.9978028671395318,
+    "predict_time_seconds": 128.4992594718933,
+    "training_time_seconds": 43.53140115737915,
+    "model_name": "SVM",
+    "note": "trained on 30000-row stratified subsample"
+  },
+  {
+    "accuracy": 0.9864616509474261,
+    "precision_macro": 0.9344628047303395,
+    "recall_macro": 0.9907267633481002,
+    "f1_macro": 0.9610150859008678,
+    "roc_auc_macro": 0.9982312376097923,
+    "predict_time_seconds": 24.83235478401184,
+    "training_time_seconds": 0.010268926620483398,
+    "model_name": "KNN",
+    "note": "trained on 30000-row stratified subsample"
+  },
+  {
+    "model_name": "CatBoost",
+    "accuracy": 0.9992430127694407,
+    "precision_macro": 0.9967531468925562,
+    "recall_macro": 0.9996610188368068,
+    "f1_macro": 0.9982008933023302,
+    "roc_auc_macro": 0.9999805624117156,
+    "training_time_seconds": 184.55027866363525,
+    "predict_time_seconds": 0.33438539505004883,
+    "tuned": true,
+    "best_params": {
+      "learning_rate": 0.1,
+      "l2_leaf_reg": 1,
+      "iterations": 300,
+      "depth": 8
+    }
+  },
+  {
+    "model_name": "XGBoost",
+    "accuracy": 0.9993145391219346,
+    "precision_macro": 0.9968317348841429,
+    "recall_macro": 0.9996761690937135,
+    "f1_macro": 0.9982478305027869,
+    "roc_auc_macro": 0.9999801300344936,
+    "training_time_seconds": 31.763028621673584,
+    "predict_time_seconds": 1.8968253135681152,
+    "tuned": true,
+    "best_params": {
+      "subsample": 1.0,
+      "n_estimators": 200,
+      "max_depth": 10,
+      "learning_rate": 0.1,
+      "colsample_bytree": 1.0
+    }
+  },
+  {
+    "model_name": "Random Forest",
+    "accuracy": 0.9991198284957015,
+    "precision_macro": 0.9967088574996193,
+    "recall_macro": 0.9994491955235377,
+    "f1_macro": 0.9980730825499098,
+    "roc_auc_macro": 0.9999665667314863,
+    "training_time_seconds": 77.15291428565979,
+    "predict_time_seconds": 4.292964935302734,
+    "tuned": false,
+    "note": "reverted to original config - tuning on subsample degraded this model"
+  },
+  {
+    "model_name": "LightGBM",
+    "accuracy": 0.9993244733375587,
+    "precision_macro": 0.996881344031754,
+    "recall_macro": 0.9995139353502666,
+    "f1_macro": 0.9981926161693602,
+    "roc_auc_macro": 0.9999587570258732,
+    "training_time_seconds": 78.4319498538971,
+    "predict_time_seconds": 60.58568477630615,
+    "tuned": false,
+    "note": "reverted to original config - tuning on subsample degraded this model"
+  }
+]

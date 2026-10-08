@@ -1,0 +1,41 @@
+{
+  "CatBoost": {
+    "best_params": {
+      "learning_rate": 0.1,
+      "l2_leaf_reg": 1,
+      "iterations": 300,
+      "depth": 8
+    },
+    "best_cv_f1_macro": 0.9988395182233519
+  },
+  "Random Forest": {
+    "best_params": {
+      "n_estimators": 300,
+      "min_samples_split": 2,
+      "min_samples_leaf": 2,
+      "max_features": "sqrt",
+      "max_depth": null
+    },
+    "best_cv_f1_macro": 0.9982114168972606
+  },
+  "XGBoost": {
+    "best_params": {
+      "subsample": 1.0,
+      "n_estimators": 200,
+      "max_depth": 10,
+      "learning_rate": 0.1,
+      "colsample_bytree": 1.0
+    },
+    "best_cv_f1_macro": 0.9989416922577897
+  },
+  "LightGBM": {
+    "best_params": {
+      "num_leaves": 63,
+      "n_estimators": 500,
+      "learning_rate": 0.05,
+      "feature_fraction": 1.0,
+      "bagging_fraction": 0.8
+    },
+    "best_cv_f1_macro": 0.9989656700114319
+  }
+}

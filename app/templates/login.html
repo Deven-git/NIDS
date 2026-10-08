@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}NIDS Login{% endblock %}
+
+{% block content %}
+
+<style>
+    /* =========================================================
+       NIDS LOGIN PAGE
+       ========================================================= */
+
+    .login-page {
+        min-height: calc(100vh - 130px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px 60px;
+        background:
+            radial-gradient(
+                circle at 15% 20%,
+                rgba(37, 99, 235, 0.10),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 85% 80%,
+                rgba(124, 58, 237, 0.08),
+                transparent 30%
+            ),
+            #f4f7fb;
+    }
+
+    .login-wrapper {
+        width: 100%;
+        max-width: 1050px;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        background: #ffffff;
+        border: 1px solid #dbe3ee;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow:
+            0 20px 50px rgba(15, 23, 42, 0.12);
+    }
+
+    /* ---------------------------------------------------------
+       LEFT PANEL
+       --------------------------------------------------------- */
+
+    .login-info {
+        position: relative;
+        padding: 55px;
+        background:
+            linear-gradient(
+                135deg,
+                #0f172a 0%,
+                #172554 55%,
+                #1e3a8a 100%
+            );
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .login-info::before {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.16);
+        top: -100px;
+        right: -90px;
+    }
+
+    .login-info::after {
+        content: "";
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(124, 58, 237, 0.12);
+        bottom: -100px;
+        left: -80px;
+    }
+
+    .security-icon {
+        position: relative;
+        z-index: 2;
+        width: 72px;
+        height: 72px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        font-size: 34px;
+        margin-bottom: 25px;
+    }
+
+    .login-info h1 {
+        position: relative;
+        z-index: 2;
+        color: #ffffff !important;
+        font-size: 42px;
+        font-weight: 800;
+        line-height: 1.15;
+        margin-bottom: 18px;
+    }
+
+    .login-info h1 span {
+        color: #60a5fa !important;
+    }
+
+    .login-info p {
+        position: relative;
+        z-index: 2;
+        color: #cbd5e1 !important;
+        font-size: 16px;
+        line-height: 1.7;
+        max-width: 500px;
+        margin-bottom: 30px;
+    }
+
+    .feature-list {
+        position: relative;
+        z-index: 2;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #e2e8f0 !important;
+        font-size: 14px;
+        margin-bottom: 14px;
+    }
+
+    .feature-check {
+        width: 26px;
+        height: 26px;
+        min-width: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: rgba(59, 130, 246, 0.18);
+        color: #60a5fa;
+    }
+
+    /* ---------------------------------------------------------
+       RIGHT PANEL
+       --------------------------------------------------------- */
+
+    .login-form-panel {
+        padding: 55px 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+    }
+
+    .login-form-box {
+        width: 100%;
+        max-width: 390px;
+    }
+
+    .login-form-box .form-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #eff6ff;
+        color: #2563eb;
+        font-size: 25px;
+        margin-bottom: 18px;
+    }
+
+    .login-form-box h2 {
+        margin: 0 0 8px;
+        font-size: 30px;
+        font-weight: 750;
+        color: #0f172a !important;
+    }
+
+    .login-subtitle {
+        margin: 0 0 30px;
+        color: #64748b !important;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #334155 !important;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+        font-size: 17px;
+        pointer-events: none;
+    }
+
+    .login-input {
+        width: 100%;
+        height: 50px;
+        padding: 0 15px 0 45px;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 10px;
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 15px;
+        box-sizing: border-box;
+        transition: all 0.2s ease;
+    }
+
+    .login-input::placeholder {
+        color: #94a3b8 !important;
+    }
+
+    .login-input:focus {
+        outline: none;
+        border-color: #2563eb !important;
+        box-shadow:
+            0 0 0 4px rgba(37, 99, 235, 0.10);
+    }
+
+    .login-button {
+        width: 100%;
+        height: 50px;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+        color: #ffffff !important;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .login-button:hover {
+        transform: translateY(-1px);
+        box-shadow:
+            0 8px 20px rgba(37, 99, 235, 0.24);
+    }
+
+    .login-button:active {
+        transform: translateY(0);
+    }
+
+    .login-security {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 22px;
+        padding: 11px;
+        border-radius: 9px;
+        background: #f8fafc;
+        color: #64748b !important;
+        font-size: 12px;
+    }
+
+    .login-security span {
+        color: #16a34a !important;
+    }
+
+    /* ---------------------------------------------------------
+       ERROR / FLASH MESSAGE
+       --------------------------------------------------------- */
+
+    .login-alert {
+        padding: 12px 14px;
+        margin-bottom: 20px;
+        border-radius: 9px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        color: #991b1b !important;
+        font-size: 13px;
+    }
+
+    /* ---------------------------------------------------------
+       RESPONSIVE
+       --------------------------------------------------------- */
+
+    @media (max-width: 850px) {
+
+        .login-wrapper {
+            grid-template-columns: 1fr;
+            max-width: 520px;
+        }
+
+        .login-info {
+            padding: 35px;
+        }
+
+        .login-info h1 {
+            font-size: 32px;
+        }
+
+        .login-form-panel {
+            padding: 40px 30px;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .login-page {
+            padding: 20px 12px 40px;
+        }
+
+        .login-info {
+            padding: 30px 24px;
+        }
+
+        .login-form-panel {
+            padding: 35px 22px;
+        }
+    }
+</style>
+
+
+<div class="login-page">
+
+    <div class="login-wrapper">
+
+        <!-- =================================================
+             LEFT SIDE
+             ================================================= -->
+
+        <div class="login-info">
+
+            <div class="security-icon">
+                🛡️
+            </div>
+
+            <h1>
+                Network<br>
+                <span>Intrusion Detection</span>
+            </h1>
+
+            <p>
+                Secure access to your intelligent NIDS dashboard.
+                Monitor network traffic, detect threats, analyze
+                attacks, and explore security insights.
+            </p>
+
+            <ul class="feature-list">
+
+                <li>
+                    <span class="feature-check">✓</span>
+                    Real-time network traffic analysis
+                </li>
+
+                <li>
+                    <span class="feature-check">✓</span>
+                    ML-based intrusion detection
+                </li>
+
+                <li>
+                    <span class="feature-check">✓</span>
+                    PCAP and live traffic analysis
+                </li>
+
+                <li>
+                    <span class="feature-check">✓</span>
+                    Explainable security predictions
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <!-- =================================================
+             RIGHT SIDE
+             ================================================= -->
+
+        <div class="login-form-panel">
+
+            <div class="login-form-box">
+
+                <div class="form-icon">
+                    🔐
+                </div>
+
+                <h2>
+                    Welcome Back
+                </h2>
+
+                <p class="login-subtitle">
+                    Sign in to access your NIDS security console.
+                </p>
+
+
+                <!-- Flash messages -->
+
+                {% with messages = get_flashed_messages() %}
+
+                    {% if messages %}
+
+                        {% for message in messages %}
+
+                            <div class="login-alert">
+                                {{ message }}
+                            </div>
+
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+                <!-- Login Form -->
+
+                <form method="POST">
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="login-input"
+                                placeholder="Enter your username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="login-input"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-button"
+                    >
+                        Sign In to NIDS
+                    </button>
+
+                </form>
+
+
+                <div class="login-security">
+
+                    <span>●</span>
+
+                    Secure authenticated access
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

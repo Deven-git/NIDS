@@ -1,0 +1,26 @@
+{
+  "total_rows": 2520798,
+  "total_features": 77,
+  "class_distribution": {
+    "Benign": 2095057,
+    "DoS": 193745,
+    "DDoS": 128014,
+    "Port Scan": 90694,
+    "Brute Force": 9150,
+    "Web Attack": 2143,
+    "Botnet": 1948,
+    "Infiltration": 36,
+    "Heartbleed": 11
+  },
+  "high_corr_pairs_count": 38,
+  "constant_features": [
+    "Bwd PSH Flags",
+    "Bwd URG Flags",
+    "Fwd Avg Bytes/Bulk",
+    "Fwd Avg Packets/Bulk",
+    "Fwd Avg Bulk Rate",
+    "Bwd Avg Bytes/Bulk",
+    "Bwd Avg Packets/Bulk",
+    "Bwd Avg Bulk Rate"
+  ]
+}

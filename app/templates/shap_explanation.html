@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}SHAP Explanation - NIDS{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+
+    <h1>🧠 SHAP Explainability</h1>
+
+    <p>
+        Explore which features influenced the model's prediction
+        for each traffic class.
+    </p>
+
+</div>
+
+
+<div class="card shap-selector mb-4">
+
+    <div class="section-header mb-2">
+
+        <div>
+
+            <h5>
+                Choose a Traffic Class
+            </h5>
+
+            <p class="text-secondary mb-0">
+                Select a class to inspect its explanations.
+            </p>
+
+        </div>
+
+        <span class="info-pill">
+            🧠 Explainability
+        </span>
+
+    </div>
+
+
+    <div class="d-flex flex-wrap">
+
+        {% for cn in class_names %}
+
+        <a
+            href="{{ url_for(
+                'shap_explain.shap_explanation',
+                class_name=cn
+            ) }}"
+            class="btn btn-sm
+            {{ 'btn-primary' if cn == selected_class else 'btn-outline-light' }}"
+        >
+            {{ cn }}
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- GLOBAL SHAP -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>
+                    Top Features Driving:
+                    {{ selected_class }}
+                </h6>
+
+                <span class="info-pill">
+                    Global
+                </span>
+
+            </div>
+
+
+            <img
+                src="{{ url_for(
+                    'shap_explain.shap_image',
+                    filename=bar_image
+                ) }}"
+                class="img-fluid rounded"
+                alt="Feature importance for {{ selected_class }}"
+
+                onerror="
+                    this.onerror=null;
+                    this.replaceWith(
+                        document.createTextNode(
+                            'No chart available for this class.'
+                        )
+                    );
+                "
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- LOCAL SHAP -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>
+                    Example Explanation
+                </h6>
+
+                <span class="info-pill">
+                    {{ selected_class }}
+                </span>
+
+            </div>
+
+
+            <img
+                src="{{ url_for(
+                    'shap_explain.shap_image',
+                    filename=local_image
+                ) }}"
+                class="img-fluid rounded"
+                alt="Local explanation for {{ selected_class }}"
+
+                onerror="
+                    this.onerror=null;
+                    this.replaceWith(
+                        document.createTextNode(
+                            'No example available for this class.'
+                        )
+                    );
+                "
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="alert alert-info mt-4">
+
+    💡
+    <strong>How to read the waterfall chart:</strong>
+
+    Starting from the model's baseline prediction,
+    individual features push the prediction toward or
+    away from the selected class.
+
+</div>
+
+{% endblock %}

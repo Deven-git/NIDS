@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - NIDS{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <h1>📊 Security Dashboard</h1>
+    <p>
+        Visual overview of network analysis, model performance and explainability.
+    </p>
+</div>
+
+
+{% if has_predictions %}
+
+<div class="card p-4 mb-4">
+
+    <div class="section-header">
+
+        <div>
+            <h4>Attack Distribution</h4>
+            <p class="text-secondary mb-0">
+                Most recent prediction run
+            </p>
+        </div>
+
+        <span class="info-pill">
+            📈 Final Results
+        </span>
+
+    </div>
+
+    <div style="max-width:560px; margin:25px auto;">
+        <canvas id="attackChart"></canvas>
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="alert alert-info">
+
+    ℹ️ No predictions yet.
+
+    <a href="{{ url_for('upload.upload') }}">
+        Upload a file
+    </a>
+
+    to see results here.
+
+</div>
+
+{% endif %}
+
+
+<div class="section-header mt-4">
+
+    <div>
+        <h4>Model Performance &amp; Explainability</h4>
+
+        <p class="text-secondary mb-0">
+            Research and evaluation figures.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="row g-4">
+
+
+    <!-- MODEL COMPARISON -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>Model Comparison</h6>
+
+                <span class="info-pill">
+                    Models
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/model_comparison_bars.png') }}"
+                class="img-fluid rounded"
+                alt="Model comparison"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- CONFUSION MATRICES -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>Confusion Matrices</h6>
+
+                <span class="info-pill">
+                    Evaluation
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/confusion_matrices_all_models.png') }}"
+                class="img-fluid rounded"
+                alt="Confusion matrices"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- ROC CURVES -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>ROC Curves</h6>
+
+                <span class="info-pill">
+                    Performance
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/roc_curves_best_model.png') }}"
+                class="img-fluid rounded"
+                alt="ROC curves"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- PRECISION RECALL -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>Precision-Recall Curves</h6>
+
+                <span class="info-pill">
+                    Performance
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/precision_recall_curves_best_model.png') }}"
+                class="img-fluid rounded"
+                alt="Precision recall curves"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- FEATURE IMPORTANCE -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>Feature Importance</h6>
+
+                <span class="info-pill">
+                    Features
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/feature_importance.png') }}"
+                class="img-fluid rounded"
+                alt="Feature importance"
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- SHAP -->
+
+    <div class="col-lg-6">
+
+        <div class="card p-3 figure-card h-100">
+
+            <div class="figure-title">
+
+                <h6>SHAP Global Feature Importance</h6>
+
+                <span class="info-pill">
+                    Explainability
+                </span>
+
+            </div>
+
+            <img
+                src="{{ url_for('static', filename='figures/shap_shap_global_bar_all_classes.png') }}"
+                class="img-fluid rounded"
+                alt="SHAP global feature importance"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+
+    const chartDataElement =
+        document.getElementById("chartData");
+
+    let chartData = null;
+
+    if (chartDataElement) {
+
+        try {
+
+            chartData = JSON.parse(
+                chartDataElement.textContent
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Unable to parse chart data:",
+                error
+            );
+
+        }
+
+    }
+
+    if (chartData) {
+
+        const canvas =
+            document.getElementById("attackChart");
+
+        if (canvas) {
+
+            const ctx =
+                canvas.getContext("2d");
+
+            new Chart(ctx, {
+
+                type: "doughnut",
+
+                data: {
+
+                    labels: chartData.labels,
+
+                    datasets: [{
+                        data: chartData.values,
+
+                        backgroundColor: [
+                            "#16a34a",
+                            "#dc2626",
+                            "#b91c1c",
+                            "#d97706",
+                            "#7c3aed",
+                            "#0891b2",
+                            "#64748b"
+                        ],
+
+                        borderColor: "#ffffff",
+
+                        borderWidth: 3
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: true,
+
+                    cutout: "58%",
+
+                    plugins: {
+
+                        legend: {
+
+                            position: "bottom",
+
+                            labels: {
+                                color: "#334155",
+                                padding: 18,
+                                usePointStyle: true
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            });
+
+        }
+
+    }
+
+</script>
+
+{% endblock %}

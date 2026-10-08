@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Upload - NIDS{% endblock %}
+
+{% block content %}
+
+<div class="page-heading">
+    <h1>📤 Upload Network Traffic</h1>
+    <p>
+        Submit pre-processed flow data or a raw Wireshark capture.
+    </p>
+</div>
+
+<div class="card p-4 mb-4">
+
+    <div class="upload-dropzone">
+
+        <div class="upload-icon">
+            📁
+        </div>
+
+        <h4>Choose a traffic file</h4>
+
+        <p class="text-secondary">
+            Supported formats:
+            <strong>.csv</strong>,
+            <strong>.pcap</strong>,
+            <strong>.pcapng</strong>
+        </p>
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="mt-4"
+        >
+
+            <input
+                type="file"
+                name="file"
+                accept=".csv,.pcap,.pcapng"
+                class="form-control"
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn btn-primary mt-3 px-4"
+            >
+                Upload &amp; Validate
+            </button>
+
+        </form>
+
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 mt-3">
+
+        <span class="info-pill">
+            📄 CSV → direct prediction
+        </span>
+
+        <span class="info-pill">
+            🦈 PCAP → flow extraction
+        </span>
+
+        <span class="info-pill">
+            🤖 CatBoost production model
+        </span>
+
+    </div>
+
+</div>
+
+{% if preview %}
+
+<div class="card p-4">
+
+    <div class="section-header">
+
+        <div>
+            <h4>✅ File Ready</h4>
+            <p class="text-secondary mb-0">
+                {{ preview.filename }}
+            </p>
+        </div>
+
+        <span class="class-badge class-benign">
+            {{ "{:,}".format(preview.row_count) }} rows
+        </span>
+
+    </div>
+
+    <h5 class="mb-3">
+        Preview — first 5 rows
+    </h5>
+
+    <div class="table-responsive">
+
+        <table class="table table-striped table-hover">
+
+            <thead>
+                <tr>
+                    {% for col in preview.sample_rows[0].keys() %}
+                    <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for row in preview.sample_rows %}
+                <tr>
+                    {% for value in row.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <a
+        href="{{ url_for('predict.predict') }}"
+        class="btn btn-success mt-3"
+    >
+        Proceed to Prediction →
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
